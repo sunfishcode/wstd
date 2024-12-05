@@ -1,19 +1,20 @@
 use crate::io::{self, AsyncRead, AsyncSeek, AsyncWrite};
 
 use super::SeekFrom;
+use alloc::vec::Vec;
 
 /// A `Cursor` wraps an in-memory buffer and provides it with a
 /// [`AsyncSeek`] implementation.
 #[derive(Clone, Debug, Default)]
 pub struct Cursor<T> {
-    inner: std::io::Cursor<T>,
+    inner: super::std_io::Cursor<T>,
 }
 
 impl<T> Cursor<T> {
     /// Creates a new cursor wrapping the provided underlying in-memory buffer.
     pub fn new(inner: T) -> Cursor<T> {
         Cursor {
-            inner: std::io::Cursor::new(inner),
+            inner: super::std_io::Cursor::new(inner),
         }
     }
 
@@ -49,11 +50,11 @@ where
 {
     async fn seek(&mut self, pos: SeekFrom) -> io::Result<u64> {
         let pos = match pos {
-            SeekFrom::Start(pos) => std::io::SeekFrom::Start(pos),
-            SeekFrom::End(pos) => std::io::SeekFrom::End(pos),
-            SeekFrom::Current(pos) => std::io::SeekFrom::Current(pos),
+            SeekFrom::Start(pos) => super::std_io::SeekFrom::Start(pos),
+            SeekFrom::End(pos) => super::std_io::SeekFrom::End(pos),
+            SeekFrom::Current(pos) => super::std_io::SeekFrom::Current(pos),
         };
-        std::io::Seek::seek(&mut self.inner, pos)
+        super::std_io::Seek::seek(&mut self.inner, pos)
     }
 }
 
@@ -62,33 +63,33 @@ where
     T: AsRef<[u8]>,
 {
     async fn read(&mut self, buf: &mut [u8]) -> io::Result<usize> {
-        std::io::Read::read(&mut self.inner, buf)
+        super::std_io::Read::read(&mut self.inner, buf)
     }
 }
 
 impl AsyncWrite for Cursor<&mut [u8]> {
     async fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
-        std::io::Write::write(&mut self.inner, buf)
+        super::std_io::Write::write(&mut self.inner, buf)
     }
     async fn flush(&mut self) -> io::Result<()> {
-        std::io::Write::flush(&mut self.inner)
+        super::std_io::Write::flush(&mut self.inner)
     }
 }
 
 impl AsyncWrite for Cursor<&mut Vec<u8>> {
     async fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
-        std::io::Write::write(&mut self.inner, buf)
+        super::std_io::Write::write(&mut self.inner, buf)
     }
     async fn flush(&mut self) -> io::Result<()> {
-        std::io::Write::flush(&mut self.inner)
+        super::std_io::Write::flush(&mut self.inner)
     }
 }
 
 impl AsyncWrite for Cursor<Vec<u8>> {
     async fn write(&mut self, buf: &[u8]) -> io::Result<usize> {
-        std::io::Write::write(&mut self.inner, buf)
+        super::std_io::Write::write(&mut self.inner, buf)
     }
     async fn flush(&mut self) -> io::Result<()> {
-        std::io::Write::flush(&mut self.inner)
+        super::std_io::Write::flush(&mut self.inner)
     }
 }

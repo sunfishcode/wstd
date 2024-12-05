@@ -2,11 +2,11 @@ use wasi::sockets::network::Ipv4SocketAddress;
 use wasi::sockets::tcp::{ErrorCode, IpAddressFamily, IpSocketAddress, TcpSocket};
 
 use crate::io;
+use crate::io::ErrorKind;
 use crate::iter::AsyncIterator;
 use alloc::format;
 use alloc::string::String;
 use core::net::SocketAddr;
-use std::io::ErrorKind;
 
 use super::TcpStream;
 use crate::runtime::AsyncPollable;

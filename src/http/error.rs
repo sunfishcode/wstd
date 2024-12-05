@@ -109,8 +109,8 @@ impl From<InvalidMethod> for Error {
     }
 }
 
-impl From<std::io::Error> for Error {
-    fn from(e: std::io::Error) -> Error {
+impl From<crate::io::Error> for Error {
+    fn from(e: crate::io::Error) -> Error {
         ErrorVariant::BodyIo(e).into()
     }
 }
@@ -122,6 +122,6 @@ pub enum ErrorVariant {
     HeaderName(InvalidHeaderName),
     HeaderValue(InvalidHeaderValue),
     Method(InvalidMethod),
-    BodyIo(std::io::Error),
+    BodyIo(crate::io::Error),
     Other(String),
 }

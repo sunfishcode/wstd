@@ -13,12 +13,13 @@ categories.workspace = true
 [features]
 default = ["std"]
 std = []
-no-std = []
+no-std = ["no_std_io2"]
 
 [dependencies]
 futures-core.workspace = true
 http.workspace = true
 itoa.workspace = true
+no_std_io2 = { workspace = true, optional = true }
 pin-project-lite.workspace = true
 slab.workspace = true
 wasi.workspace = true
@@ -62,6 +63,7 @@ humantime = "2.1.0"
 heck = "0.5"
 http = "1.1"
 itoa = "1"
+no_std_io2 = { version = "0.9.0", features = ["alloc"] }
 pin-project-lite = "0.2.8"
 quote = "1.0"
 serde_json = "1"

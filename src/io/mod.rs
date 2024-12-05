@@ -19,10 +19,15 @@ pub use stdio::*;
 pub use streams::*;
 pub use write::*;
 
+#[cfg(not(feature = "std"))]
+use no_std_io2::io as std_io;
+#[cfg(feature = "std")]
+use std::io as std_io;
+
 /// The error type for I/O operations.
 ///
-pub use std::io::Error;
+pub use std_io::{Error, ErrorKind};
 
 /// A specialized Result type for I/O operations.
 ///
-pub use std::io::Result;
+pub use std_io::Result;

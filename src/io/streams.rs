@@ -1,6 +1,6 @@
 use super::{AsyncPollable, AsyncRead, AsyncWrite};
+use crate::io::Result;
 use core::cell::RefCell;
-use std::io::Result;
 use wasi::io::streams::{InputStream, OutputStream, StreamError};
 
 #[derive(Debug)]
@@ -46,7 +46,7 @@ impl AsyncInputStream {
             // 0 bytes from Rust's `read` means end-of-stream.
             Err(StreamError::Closed) => return Ok(0),
             Err(StreamError::LastOperationFailed(err)) => {
-                return Err(std::io::Error::other(err.to_debug_string()))
+                return Err(crate::io::Error::other(err.to_debug_string()))
             }
         };
         let len = read.len();
@@ -115,7 +115,7 @@ impl AsyncOutputStream {
                             ))
                         }
                         Err(StreamError::LastOperationFailed(err)) => {
-                            return Err(std::io::Error::other(err.to_debug_string()))
+                            return Err(crate::io::Error::other(err.to_debug_string()))
                         }
                     }
                 }
@@ -125,7 +125,7 @@ impl AsyncOutputStream {
                     ))
                 }
                 Err(StreamError::LastOperationFailed(err)) => {
-                    return Err(std::io::Error::other(err.to_debug_string()))
+                    return Err(crate::io::Error::other(err.to_debug_string()))
                 }
             }
         }
@@ -141,7 +141,7 @@ impl AsyncOutputStream {
                 crate::io::ErrorKind::ConnectionReset,
             )),
             Err(StreamError::LastOperationFailed(err)) => {
-                Err(std::io::Error::other(err.to_debug_string()))
+                Err(crate::io::Error::other(err.to_debug_string()))
             }
         }
     }
