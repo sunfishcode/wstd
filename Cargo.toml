@@ -13,12 +13,13 @@ categories.workspace = true
 [features]
 default = ["std"]
 std = []
-no-std = ["no_std_io2"]
+no-std = ["hashbrown", "no_std_io2"]
 
 [dependencies]
 futures-core.workspace = true
 http.workspace = true
 itoa.workspace = true
+hashbrown = { workspace = true, optional = true }
 no_std_io2 = { workspace = true, optional = true }
 pin-project-lite.workspace = true
 slab.workspace = true
@@ -59,6 +60,7 @@ cargo_metadata = "0.18.1"
 clap = { version = "4.5.26", features = ["derive"] }
 futures-core = "0.3.19"
 futures-lite = "1.12.0"
+hashbrown = { version = "0.15.2", default-features = false }
 humantime = "2.1.0"
 heck = "0.5"
 http = "1.1"

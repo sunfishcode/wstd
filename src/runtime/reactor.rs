@@ -6,7 +6,10 @@ use core::cell::RefCell;
 use core::future;
 use core::pin::Pin;
 use core::task::{Context, Poll, Waker};
+#[cfg(not(feature = "std"))]
+use hashbrown::HashMap;
 use slab::Slab;
+#[cfg(feature = "std")]
 use std::collections::HashMap;
 use wasi::io::poll::Pollable;
 
