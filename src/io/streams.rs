@@ -170,3 +170,33 @@ pub(crate) async fn splice(
 
     writer.stream.splice(&reader.stream, len)
 }
+
+pub(crate) async fn write_zeroes(
+    writer: &AsyncOutputStream,
+    len: u64,
+) -> core::result::Result<u64, StreamError> {
+    // Loops at most twice.
+    loop {
+        match writer.stream.check_write() {
+            Ok(0) => {
+                writer.ready().await;
+                // Next loop guaranteed to have nonzero check_write, or error.
+                continue;
+            }
+            Ok(some) => {
+                let writable = some.try_into().unwrap_or(u64::MAX).min(len);
+                writer.stream.write_zeroes(writable)?;
+                return Ok(writable);
+            }
+            Err(err) => return Err(err),
+        }
+    }
+}
+
+pub(crate) async fn skip(
+    reader: &AsyncInputStream,
+    len: u64,
+) -> core::result::Result<u64, StreamError> {
+    reader.ready().await;
+    reader.stream.skip(len)
+}

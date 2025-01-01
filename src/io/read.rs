@@ -31,6 +31,13 @@ pub trait AsyncRead {
     fn as_async_input_stream(&self) -> Option<&io::AsyncInputStream> {
         None
     }
+
+    // If the `AsyncRead` implementation is a stream that infinitely repeats
+    // a single value (such as `std::io::Repeat`), return that value.
+    #[inline]
+    fn as_repeated_value(&self) -> Option<u8> {
+        None
+    }
 }
 
 impl<R: AsyncRead + ?Sized> AsyncRead for &mut R {

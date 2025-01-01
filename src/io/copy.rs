@@ -7,7 +7,7 @@ where
     R: AsyncRead,
     W: AsyncWrite,
 {
-    // Optimized path when we have an `AsyncInputStream` and an
+    // Optimized paths when we have an `AsyncInputStream` and/or an
     // `AsyncOutputStream`.
     if let Some(reader) = reader.as_async_input_stream() {
         if let Some(writer) = writer.as_async_output_stream() {
@@ -15,6 +15,30 @@ where
                 match super::splice(reader, writer, u64::MAX).await {
                     Ok(_n) => (),
                     Err(StreamError::Closed) => return Ok(()),
+                    Err(StreamError::LastOperationFailed(err)) => {
+                        return Err(Error::other(err.to_debug_string()));
+                    }
+                }
+            }
+        } else if writer.ignores_input() {
+            loop {
+                match super::skip(reader, u64::MAX).await {
+                    Ok(_n) => (),
+                    Err(StreamError::Closed) => return Ok(()),
+                    Err(StreamError::LastOperationFailed(err)) => {
+                        return Err(Error::other(err.to_debug_string()));
+                    }
+                }
+            }
+        }
+    } else if let Some(writer) = writer.as_async_output_stream() {
+        if let Some(0) = reader.as_repeated_value() {
+            loop {
+                match super::write_zeroes(writer, u64::MAX).await {
+                    Ok(_n) => (),
+                    Err(StreamError::Closed) => {
+                        return Err(Error::from(std::io::ErrorKind::ConnectionReset));
+                    }
                     Err(StreamError::LastOperationFailed(err)) => {
                         return Err(Error::other(err.to_debug_string()));
                     }

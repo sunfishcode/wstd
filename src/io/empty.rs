@@ -16,6 +16,11 @@ impl AsyncWrite for Empty {
     async fn flush(&mut self) -> super::Result<()> {
         Ok(())
     }
+
+    #[inline]
+    fn ignores_input(&self) -> bool {
+        true
+    }
 }
 
 /// Creates a value that is always at EOF for reads, and ignores all data written.

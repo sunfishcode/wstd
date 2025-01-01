@@ -23,6 +23,13 @@ pub trait AsyncWrite {
     fn as_async_output_stream(&self) -> Option<&io::AsyncOutputStream> {
         None
     }
+
+    // If the `AsyncWrite` implementation is a stream that ignores its input
+    // (such as `std::io::Empty`), return true.
+    #[inline]
+    fn ignores_input(&self) -> bool {
+        false
+    }
 }
 
 impl<W: AsyncWrite + ?Sized> AsyncWrite for &mut W {
