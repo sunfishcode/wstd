@@ -11,9 +11,9 @@ keywords.workspace = true
 categories.workspace = true
 
 [features]
-default = ["std"]
+default = ["std", "http/std"]
 std = []
-no-std = ["hashbrown", "no_std_io2"]
+no-std = ["hashbrown", "no_std_io2", "http/no-std"]
 
 [dependencies]
 futures-core.workspace = true
@@ -64,7 +64,7 @@ futures-lite = "1.12.0"
 hashbrown = { version = "0.15.2", default-features = false }
 humantime = "2.1.0"
 heck = "0.5"
-http = "1.1"
+http = { version = "1.1", default-features = false }
 itoa = "1"
 no_std_io2 = { version = "0.9.0", features = ["alloc"] }
 pin-project-lite = "0.2.8"
@@ -88,3 +88,7 @@ wstd-macro = { path = "macro", version = "=0.5.0-draft2" }
 targets = [
     "wasm32-wasip2"
 ]
+
+# Temporary until no-std support is upstream.
+[patch.crates-io]
+http = { git = "https://github.com/sunfishcode/http", branch = "no-std" }
