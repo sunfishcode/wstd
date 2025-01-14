@@ -4,6 +4,7 @@
 //#![deny(missing_debug_implementations)]
 //#![warn(missing_docs)]
 //#![forbid(rustdoc::missing_doc_code_examples)]
+#![cfg_attr(not(feature = "std"), no_std)]
 
 //! An async standard library for Wasm Components and WASI 0.2
 //!
@@ -54,6 +55,8 @@
 //! bytes. And `wstd::runtime` provides access to async runtime primitives.
 //! These are unique capabilities provided by WASI 0.2, and because this library
 //! is specific to that are exposed from here.
+
+extern crate alloc;
 
 pub mod future;
 #[macro_use]

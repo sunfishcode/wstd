@@ -1,12 +1,12 @@
 use super::{Duration, Wait};
-use std::future::IntoFuture;
-use std::ops::{Add, AddAssign, Sub, SubAssign};
+use core::future::IntoFuture;
+use core::ops::{Add, AddAssign, Sub, SubAssign};
 use wasi::clocks::monotonic_clock;
 
 /// A measurement of a monotonically nondecreasing clock. Opaque and useful only
 /// with Duration.
 ///
-/// This type wraps `std::time::Duration` so we can implement traits on it
+/// This type wraps `core::time::Duration` so we can implement traits on it
 /// without coherence issues, just like if we were implementing this in the
 /// stdlib.
 #[derive(Debug, PartialEq, PartialOrd, Ord, Eq, Hash, Clone, Copy)]

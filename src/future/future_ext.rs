@@ -1,5 +1,5 @@
 use super::{Delay, Timeout};
-use std::future::{Future, IntoFuture};
+use core::future::{Future, IntoFuture};
 
 /// Extend `Future` with time-based operations.
 pub trait FutureExt: Future {

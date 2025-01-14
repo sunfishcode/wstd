@@ -1,5 +1,5 @@
 use super::{AsyncPollable, AsyncRead, AsyncWrite};
-use std::cell::RefCell;
+use core::cell::RefCell;
 use std::io::Result;
 use wasi::io::streams::{InputStream, OutputStream, StreamError};
 
@@ -110,7 +110,9 @@ impl AsyncOutputStream {
                     match self.stream.write(&buf[0..writable]) {
                         Ok(()) => return Ok(writable),
                         Err(StreamError::Closed) => {
-                            return Err(std::io::Error::from(std::io::ErrorKind::ConnectionReset))
+                            return Err(crate::io::Error::from(
+                                crate::io::ErrorKind::ConnectionReset,
+                            ))
                         }
                         Err(StreamError::LastOperationFailed(err)) => {
                             return Err(std::io::Error::other(err.to_debug_string()))
@@ -118,7 +120,9 @@ impl AsyncOutputStream {
                     }
                 }
                 Err(StreamError::Closed) => {
-                    return Err(std::io::Error::from(std::io::ErrorKind::ConnectionReset))
+                    return Err(crate::io::Error::from(
+                        crate::io::ErrorKind::ConnectionReset,
+                    ))
                 }
                 Err(StreamError::LastOperationFailed(err)) => {
                     return Err(std::io::Error::other(err.to_debug_string()))
@@ -133,9 +137,9 @@ impl AsyncOutputStream {
                 self.ready().await;
                 Ok(())
             }
-            Err(StreamError::Closed) => {
-                Err(std::io::Error::from(std::io::ErrorKind::ConnectionReset))
-            }
+            Err(StreamError::Closed) => Err(crate::io::Error::from(
+                crate::io::ErrorKind::ConnectionReset,
+            )),
             Err(StreamError::LastOperationFailed(err)) => {
                 Err(std::io::Error::other(err.to_debug_string()))
             }

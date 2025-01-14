@@ -1,7 +1,8 @@
 use wasi::http::types::Scheme as WasiScheme;
 
+use alloc::borrow::ToOwned;
+use core::str::FromStr;
 pub use http::uri::{InvalidUri, Scheme};
-use std::str::FromStr;
 
 pub(crate) fn to_wasi_scheme(value: &Scheme) -> WasiScheme {
     match value.as_str() {

@@ -7,6 +7,8 @@ use super::{
     Authority, Error, HeaderMap, PathAndQuery, Uri,
 };
 use crate::io::AsyncInputStream;
+use alloc::format;
+use alloc::string::ToString;
 use wasi::http::outgoing_handler::OutgoingRequest;
 use wasi::http::types::IncomingRequest;
 

@@ -7,10 +7,10 @@ mod instant;
 pub use duration::Duration;
 pub use instant::Instant;
 
+use core::future::Future;
+use core::pin::Pin;
+use core::task::{Context, Poll};
 use pin_project_lite::pin_project;
-use std::future::Future;
-use std::pin::Pin;
-use std::task::{Context, Poll};
 use wasi::clocks::{
     monotonic_clock::{subscribe_duration, subscribe_instant},
     wall_clock,

@@ -1,8 +1,11 @@
 use crate::http::fields::ToWasiHeaderError;
-use std::fmt;
+use alloc::string::String;
+use alloc::vec;
+use alloc::vec::Vec;
+use core::fmt;
 
 /// The `http` result type.
-pub type Result<T> = std::result::Result<T, Error>;
+pub type Result<T> = core::result::Result<T, Error>;
 
 /// The `http` error type.
 pub struct Error {
@@ -45,7 +48,7 @@ impl fmt::Display for Error {
     }
 }
 
-impl std::error::Error for Error {}
+impl core::error::Error for Error {}
 
 impl Error {
     pub fn variant(&self) -> &ErrorVariant {

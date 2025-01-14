@@ -1,4 +1,5 @@
 use crate::io;
+use alloc::vec::Vec;
 
 const CHUNK_SIZE: usize = 2048;
 

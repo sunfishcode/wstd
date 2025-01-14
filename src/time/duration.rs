@@ -1,12 +1,12 @@
 use super::{Instant, Wait};
-use std::future::IntoFuture;
-use std::ops::{Add, AddAssign, Sub, SubAssign};
+use core::future::IntoFuture;
+use core::ops::{Add, AddAssign, Sub, SubAssign};
 use wasi::clocks::monotonic_clock;
 
 /// A Duration type to represent a span of time, typically used for system
 /// timeouts.
 ///
-/// This type wraps `std::time::Duration` so we can implement traits on it
+/// This type wraps `core::time::Duration` so we can implement traits on it
 /// without coherence issues, just like if we were implementing this in the
 /// stdlib.
 #[derive(Debug, PartialEq, PartialOrd, Ord, Eq, Hash, Clone, Copy)]
@@ -17,35 +17,35 @@ impl Duration {
     #[must_use]
     #[inline]
     pub fn new(secs: u64, nanos: u32) -> Duration {
-        std::time::Duration::new(secs, nanos).into()
+        core::time::Duration::new(secs, nanos).into()
     }
 
     /// Creates a new `Duration` from the specified number of whole seconds.
     #[must_use]
     #[inline]
     pub fn from_secs(secs: u64) -> Duration {
-        std::time::Duration::from_secs(secs).into()
+        core::time::Duration::from_secs(secs).into()
     }
 
     /// Creates a new `Duration` from the specified number of milliseconds.
     #[must_use]
     #[inline]
     pub fn from_millis(millis: u64) -> Self {
-        std::time::Duration::from_millis(millis).into()
+        core::time::Duration::from_millis(millis).into()
     }
 
     /// Creates a new `Duration` from the specified number of microseconds.
     #[must_use]
     #[inline]
     pub fn from_micros(micros: u64) -> Self {
-        std::time::Duration::from_micros(micros).into()
+        core::time::Duration::from_micros(micros).into()
     }
 
     /// Creates a new `Duration` from the specified number of nanoseconds.
     #[must_use]
     #[inline]
     pub fn from_nanos(nanos: u64) -> Self {
-        std::time::Duration::from_nanos(nanos).into()
+        core::time::Duration::from_nanos(nanos).into()
     }
 
     /// Creates a new `Duration` from the specified number of seconds represented
@@ -64,7 +64,7 @@ impl Duration {
     #[must_use]
     #[inline]
     pub fn from_secs_f64(secs: f64) -> Duration {
-        std::time::Duration::from_secs_f64(secs).into()
+        core::time::Duration::from_secs_f64(secs).into()
     }
 
     /// Creates a new `Duration` from the specified number of seconds represented
@@ -75,7 +75,7 @@ impl Duration {
     #[must_use]
     #[inline]
     pub fn from_secs_f32(secs: f32) -> Duration {
-        std::time::Duration::from_secs_f32(secs).into()
+        core::time::Duration::from_secs_f32(secs).into()
     }
 
     /// Returns the number of whole seconds contained by this `Duration`.
@@ -107,8 +107,8 @@ impl Duration {
     }
 }
 
-impl From<std::time::Duration> for Duration {
-    fn from(inner: std::time::Duration) -> Self {
+impl From<core::time::Duration> for Duration {
+    fn from(inner: core::time::Duration) -> Self {
         Self(
             inner
                 .as_nanos()
@@ -118,9 +118,9 @@ impl From<std::time::Duration> for Duration {
     }
 }
 
-impl Into<std::time::Duration> for Duration {
-    fn into(self) -> std::time::Duration {
-        std::time::Duration::from_nanos(self.0)
+impl Into<core::time::Duration> for Duration {
+    fn into(self) -> core::time::Duration {
+        core::time::Duration::from_nanos(self.0)
     }
 }
 

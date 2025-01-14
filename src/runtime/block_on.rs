@@ -1,11 +1,11 @@
 use super::{Reactor, REACTOR};
 
+use alloc::sync::Arc;
+use alloc::task::Wake;
 use core::future::Future;
 use core::pin::pin;
 use core::task::Waker;
 use core::task::{Context, Poll};
-use std::sync::Arc;
-use std::task::Wake;
 
 /// Start the event loop
 pub fn block_on<Fut>(fut: Fut) -> Fut::Output

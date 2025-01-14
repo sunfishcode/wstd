@@ -1,9 +1,9 @@
 use crate::time::utils::timeout_err;
 
-use std::future::Future;
+use core::future::Future;
+use core::pin::Pin;
+use core::task::{Context, Poll};
 use std::io;
-use std::pin::Pin;
-use std::task::{Context, Poll};
 
 use pin_project_lite::pin_project;
 

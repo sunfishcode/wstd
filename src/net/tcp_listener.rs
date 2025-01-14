@@ -3,8 +3,10 @@ use wasi::sockets::tcp::{ErrorCode, IpAddressFamily, IpSocketAddress, TcpSocket}
 
 use crate::io;
 use crate::iter::AsyncIterator;
+use alloc::format;
+use alloc::string::String;
+use core::net::SocketAddr;
 use std::io::ErrorKind;
-use std::net::SocketAddr;
 
 use super::TcpStream;
 use crate::runtime::AsyncPollable;

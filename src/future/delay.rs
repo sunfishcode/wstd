@@ -1,7 +1,7 @@
+use core::future::Future;
+use core::pin::Pin;
+use core::task::{Context, Poll};
 use futures_core::ready;
-use std::future::Future;
-use std::pin::Pin;
-use std::task::{Context, Poll};
 
 use pin_project_lite::pin_project;
 

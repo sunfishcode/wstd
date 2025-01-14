@@ -6,6 +6,7 @@ use super::{
     Error, HeaderMap,
 };
 use crate::io::AsyncInputStream;
+use alloc::string::ToString;
 use http::StatusCode;
 
 pub use http::response::{Builder, Response};

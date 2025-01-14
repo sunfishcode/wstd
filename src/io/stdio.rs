@@ -1,5 +1,6 @@
 use super::{AsyncInputStream, AsyncOutputStream, AsyncRead, AsyncWrite, Result};
-use std::cell::LazyCell;
+use alloc::vec::Vec;
+use core::cell::LazyCell;
 use wasi::cli::terminal_input::TerminalInput;
 use wasi::cli::terminal_output::TerminalOutput;
 

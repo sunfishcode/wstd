@@ -1,6 +1,8 @@
 pub use http::header::{HeaderMap, HeaderName, HeaderValue};
 
 use super::Error;
+use alloc::format;
+use alloc::string::String;
 use wasi::http::types::{Fields, HeaderError as WasiHttpHeaderError};
 
 pub(crate) fn header_map_from_wasi(wasi_fields: Fields) -> Result<HeaderMap, Error> {

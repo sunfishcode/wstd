@@ -1,3 +1,4 @@
+use alloc::borrow::ToOwned;
 use wasi::http::types::Method as WasiMethod;
 
 use http::method::InvalidMethod;

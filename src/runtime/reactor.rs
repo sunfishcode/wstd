@@ -1,12 +1,13 @@
 use super::REACTOR;
 
+use alloc::rc::Rc;
+use alloc::vec::Vec;
 use core::cell::RefCell;
 use core::future;
 use core::pin::Pin;
 use core::task::{Context, Poll, Waker};
 use slab::Slab;
 use std::collections::HashMap;
-use std::rc::Rc;
 use wasi::io::poll::Pollable;
 
 /// A key for a Pollable, which is an index into the Slab<Pollable> in Reactor.
@@ -40,7 +41,7 @@ impl AsyncPollable {
     }
     /// Create a Future that waits for the Pollable's readiness.
     pub fn wait_for(&self) -> WaitFor {
-        use std::sync::atomic::{AtomicUsize, Ordering};
+        use core::sync::atomic::{AtomicUsize, Ordering};
         static COUNTER: AtomicUsize = AtomicUsize::new(0);
         let unique = COUNTER.fetch_add(1, Ordering::Relaxed);
         WaitFor {

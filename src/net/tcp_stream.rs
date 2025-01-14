@@ -1,3 +1,5 @@
+use alloc::format;
+use alloc::string::String;
 use wasi::{
     io::streams::{InputStream, OutputStream},
     sockets::tcp::TcpSocket,

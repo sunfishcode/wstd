@@ -161,7 +161,7 @@ impl Finished {
     /// [`http_server`]: crate::http_server
     pub fn finish(
         body: OutgoingBody,
-        result: std::io::Result<()>,
+        result: crate::io::Result<()>,
         trailers: Option<HeaderMap>,
     ) -> Self {
         let (stream, body) = body.consume();

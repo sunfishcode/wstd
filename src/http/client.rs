@@ -8,10 +8,10 @@ use crate::http::response::try_from_incoming;
 use crate::io::{self, AsyncOutputStream, AsyncPollable};
 use crate::runtime::WaitFor;
 use crate::time::Duration;
+use core::future::Future;
+use core::pin::Pin;
+use core::task::{Context, Poll};
 use pin_project_lite::pin_project;
-use std::future::Future;
-use std::pin::Pin;
-use std::task::{Context, Poll};
 use wasi::http::types::{
     FutureIncomingResponse as WasiFutureIncomingResponse, OutgoingBody as WasiOutgoingBody,
     RequestOptions as WasiRequestOptions,

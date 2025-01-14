@@ -3,6 +3,9 @@
 use crate::http::fields::header_map_from_wasi;
 use crate::io::{AsyncInputStream, AsyncOutputStream, AsyncRead, AsyncWrite, Cursor, Empty};
 use crate::runtime::AsyncPollable;
+use alloc::borrow::ToOwned;
+use alloc::string::{String, ToString};
+use alloc::vec::Vec;
 use core::fmt;
 use http::header::{CONTENT_LENGTH, TRANSFER_ENCODING};
 use wasi::http::types::IncomingBody as WasiIncomingBody;
@@ -21,7 +24,7 @@ pub(crate) enum BodyKind {
 impl BodyKind {
     pub(crate) fn from_headers(headers: &HeaderMap) -> Result<BodyKind, InvalidContentLength> {
         if let Some(value) = headers.get(CONTENT_LENGTH) {
-            let content_length = std::str::from_utf8(value.as_ref())
+            let content_length = core::str::from_utf8(value.as_ref())
                 .unwrap()
                 .parse::<u64>()
                 .map_err(|_| InvalidContentLength)?;
@@ -212,7 +215,7 @@ impl fmt::Display for InvalidContentLength {
     }
 }
 
-impl std::error::Error for InvalidContentLength {}
+impl core::error::Error for InvalidContentLength {}
 
 impl From<InvalidContentLength> for Error {
     fn from(e: InvalidContentLength) -> Self {
@@ -249,7 +252,7 @@ impl OutgoingBody {
             dontdrop,
         } = self;
 
-        std::mem::forget(dontdrop);
+        core::mem::forget(dontdrop);
 
         (stream, body)
     }

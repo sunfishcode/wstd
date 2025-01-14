@@ -11,6 +11,9 @@ keywords.workspace = true
 categories.workspace = true
 
 [features]
+default = ["std"]
+std = []
+no-std = []
 
 [dependencies]
 futures-core.workspace = true
