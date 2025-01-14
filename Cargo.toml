@@ -58,7 +58,7 @@ authors = [
 anyhow = "1"
 cargo_metadata = "0.18.1"
 clap = { version = "4.5.26", features = ["derive"] }
-futures-core = "0.3.19"
+futures-core = { version = "0.3.19", default-features = false }
 futures-lite = "1.12.0"
 hashbrown = { version = "0.15.2", default-features = false }
 humantime = "2.1.0"
@@ -69,13 +69,13 @@ no_std_io2 = { version = "0.9.0", features = ["alloc"] }
 pin-project-lite = "0.2.8"
 quote = "1.0"
 serde_json = "1"
-slab = "0.4.9"
+slab = { version = "0.4.9", default-features = false }
 syn = "2.0"
 test-log = { version = "0.2", features = ["trace"] }
 test-programs = { path = "test-programs" }
 test-programs-artifacts = { path = "test-programs/artifacts" }
 ureq = { version = "2.12.1", default-features = false }
-wasi = "0.14.0"
+wasi = { version = "0.14.0", default-features = false }
 wasmtime = "26"
 wasmtime-wasi = "26"
 wasmtime-wasi-http = "26"
