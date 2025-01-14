@@ -112,12 +112,11 @@ impl Reactor {
     /// # Panic
     /// This will panic if called outside of `wstd::runtime::block_on`.
     pub fn current() -> Self {
-        REACTOR.with(|r| {
-            r.borrow()
-                .as_ref()
-                .expect("Reactor::current must be called within a wstd runtime")
-                .clone()
-        })
+        REACTOR
+            .borrow()
+            .as_ref()
+            .expect("Reactor::current must be called within a wstd runtime")
+            .clone()
     }
 
     /// Create a new instance of `Reactor`

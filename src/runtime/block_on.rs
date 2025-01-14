@@ -14,8 +14,9 @@ where
 {
     // Construct the reactor
     let reactor = Reactor::new();
+    let clone = reactor.clone();
     // Store a copy as a singleton to be used elsewhere:
-    let prev = REACTOR.replace(Some(reactor.clone()));
+    let prev = REACTOR.replace(Some(clone));
     if prev.is_some() {
         panic!("cannot wstd::runtime::block_on inside an existing block_on!")
     }
